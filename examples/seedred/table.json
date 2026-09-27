@@ -1,0 +1,34 @@
+{
+  "rows": [
+    {
+      "id": "cap",
+      "file": "retry.py",
+      "anchor": "        if delay > cap:",
+      "replacement": "        if False:",
+      "test": "tests/test_retry.py::test_delays_never_exceed_the_cap",
+      "why": "without the cap the delays grow without bound"
+    },
+    {
+      "id": "doubling",
+      "file": "retry.py",
+      "anchor": "        delay = base * (2**attempt)",
+      "replacement": "        delay = base * (attempt + 1)",
+      "test": "tests/test_retry.py::test_delays_double_each_attempt",
+      "why": "linear growth instead of exponential"
+    },
+    {
+      "id": "negative",
+      "file": "retry.py",
+      "anchor": [
+        "    if attempts < 0:",
+        "        raise ValueError(\"attempts must not be negative\")"
+      ],
+      "replacement": [
+        "    if False:",
+        "        raise ValueError(\"attempts must not be negative\")"
+      ],
+      "test": "tests/test_retry.py::test_negative_attempts_are_refused",
+      "why": "a negative count would silently mean no retries"
+    }
+  ]
+}

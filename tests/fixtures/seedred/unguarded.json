@@ -1,0 +1,12 @@
+{
+  "rows": [
+    {
+      "id": "cap-named-against-the-wrong-test",
+      "file": "pricing.py",
+      "anchor": "    if percent > 50:",
+      "replacement": "    if False:",
+      "test": "tests/test_pricing.py::test_discount_is_applied",
+      "why": "known positive: a 10 percent discount never reaches the cap, so this test cannot see it"
+    }
+  ]
+}

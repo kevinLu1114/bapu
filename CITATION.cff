@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Bapu"
+abstract: "Make AI-assisted changes prove themselves before anyone has to trust them."
+type: software
+authors:
+  - name: "kevinLu1114"
+version: "0.1.0"
+license: MIT
+repository-code: "https://github.com/kevinLu1114/bapu"
+keywords:
+  - ai-assisted
+  - code-review
+  - mutation-testing
+  - openspec
+  - verification

@@ -1,0 +1,536 @@
+{
+  "rows": [
+    {
+      "id": "gate-prose",
+      "file": "src/bapu/gate.py",
+      "anchor": "            elif stripped:",
+      "replacement": "            elif False:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[prose]",
+      "why": "prose inside a scenario would pass unseen"
+    },
+    {
+      "id": "gate-three-hash",
+      "file": "src/bapu/gate.py",
+      "anchor": "            if _THREE_HASH_SCN_RE.match(line):",
+      "replacement": "            if False:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[three-hash]",
+      "why": "a three-hash scenario would be reported as some other heading problem"
+    },
+    {
+      "id": "gate-no-scenario",
+      "file": "src/bapu/gate.py",
+      "anchor": "            if not req.scenarios:",
+      "replacement": "            if False:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[no-scenario]",
+      "why": "a requirement with nothing testable would pass"
+    },
+    {
+      "id": "gate-when-then",
+      "file": "src/bapu/gate.py",
+      "anchor": "                missing = [k for k in (\"WHEN\", \"THEN\") if not getattr(scn, k.lower())]",
+      "replacement": "                missing = []",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[no-then]",
+      "why": "a scenario without an outcome would pass"
+    },
+    {
+      "id": "gate-purpose",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if delta.new_capability and adds and not delta.has_purpose:",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[no-purpose]",
+      "why": "a new capability would be archived without a purpose"
+    },
+    {
+      "id": "gate-empty-step",
+      "file": "src/bapu/gate.py",
+      "anchor": "            if step and step.group(2).strip():",
+      "replacement": "            if step:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[empty-then]",
+      "why": "an empty THEN would count as an outcome"
+    },
+    {
+      "id": "gate-op-heading",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if _OP_LIKE_RE.match(line):",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[op-typo]",
+      "why": "a mistyped operation heading would silently drop the requirements' operation"
+    },
+    {
+      "id": "gate-empty-delta",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if not delta.requirements:",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_every_delta_file_must_hold_a_requirement",
+      "why": "an empty delta file next to a good one would pass"
+    },
+    {
+      "id": "gate-hold-band",
+      "file": "src/bapu/gate.py",
+      "anchor": "    if any(low <= p <= high for p in raw.values()):",
+      "replacement": "    if False:",
+      "test": "tests/test_gate.py::test_the_hold_band_includes_both_ends[0.5-HOLD]",
+      "why": "a score sitting on the threshold would pass"
+    },
+    {
+      "id": "gate-min-statistic",
+      "file": "src/bapu/gate.py",
+      "anchor": "    return min(raw.values()), raw",
+      "replacement": "    return raw[\"original\"], raw",
+      "test": "tests/test_gate.py::test_the_stored_score_is_the_lower_of_original_and_paraphrase",
+      "why": "a clause that fails under the paraphrase would pass"
+    },
+    {
+      "id": "gate-threshold",
+      "file": "src/bapu/gate.py",
+      "anchor": "    if any(p < THRESHOLD for p in raw.values()):",
+      "replacement": "    if False:",
+      "test": "tests/test_gate.py::test_every_question_below_the_threshold_holds",
+      "why": "scores below the threshold would pass"
+    },
+    {
+      "id": "gate-unjudged",
+      "file": "src/bapu/gate.py",
+      "anchor": "    if not any(r.get(\"judged\") for r in rows):",
+      "replacement": "    if False:",
+      "test": "tests/test_gate.py::test_a_removed_only_delta_is_pass_unjudged",
+      "why": "no judgment at all would read as PASS"
+    },
+    {
+      "id": "gate-structure-first",
+      "file": "src/bapu/gate.py",
+      "anchor": "    rows = score_change(change, asker if online and not problems else None)",
+      "replacement": "    rows = score_change(change, asker)",
+      "test": "tests/test_gate.py::test_a_structural_hold_is_never_sent_to_the_api",
+      "why": "a structurally broken delta would still be sent to the API"
+    },
+    {
+      "id": "gate-receipt-stale",
+      "file": "src/bapu/gate.py",
+      "anchor": "    if data.get(\"files_sha256\") != files_sha256(change):",
+      "replacement": "    if False:",
+      "test": "tests/test_gate.py::test_editing_the_spec_stales_the_receipt",
+      "why": "a receipt would stay current after the spec changed"
+    },
+    {
+      "id": "gate-receipt-rejudged",
+      "file": "src/bapu/gate.py",
+      "anchor": "        hold = score_hold(where, k, raw)",
+      "replacement": "        hold = None",
+      "test": "tests/test_gate.py::test_a_tampered_score_is_caught_even_with_a_pass_verdict",
+      "why": "a receipt's own PASS line would be trusted over its scores"
+    },
+    {
+      "id": "gate-receipt-model",
+      "file": "src/bapu/gate.py",
+      "anchor": "            or any(m != model for m in models.values())",
+      "replacement": "            or False",
+      "test": "tests/test_gate.py::test_a_receipt_from_another_model_is_not_current",
+      "why": "a receipt from another model version would count"
+    },
+    {
+      "id": "gate-op-near-miss",
+      "file": "src/bapu/gate.py",
+      "anchor": "    r\"^#{1,6}\\s*(?:ADDED|MODIFIED|REMOVED|RENAMED)\\b|^##\\s+\\S+\\s+requirements?\\b\",",
+      "replacement": "    r\"^##\\s+\\S+\\s+Requirements?\\s*$\",",
+      "test": "tests/test_gate.py::test_each_planted_structural_defect_holds[op-colon]",
+      "why": "a near-miss operation heading would drop the Purpose rule without a word"
+    },
+    {
+      "id": "gate-follow-symlinks",
+      "file": "src/bapu/gate.py",
+      "anchor": "    for dirpath, dirnames, filenames in os.walk(spec_root, followlinks=True):",
+      "replacement": "    for dirpath, dirnames, filenames in os.walk(spec_root, followlinks=False):",
+      "test": "tests/test_gate.py::test_a_symlinked_delta_directory_is_checked",
+      "why": "a linked delta would be skipped and the change would pass without it"
+    },
+    {
+      "id": "gate-digest-judged-bytes",
+      "file": "src/bapu/gate.py",
+      "anchor": "        digest.update(delta.raw + b\"\\0\")",
+      "replacement": "        digest.update(delta.file.read_bytes() + b\"\\0\")",
+      "test": "tests/test_gate.py::test_the_receipt_digest_covers_the_bytes_that_were_judged",
+      "why": "a receipt could certify text that was edited after it was judged"
+    },
+    {
+      "id": "gate-receipt-row-identity",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if row.get(\"file\") != path or row.get(\"name\") != req.name:",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_a_receipt_row_for_another_requirement_is_not_current",
+      "why": "one requirement's scores could stand in for another's"
+    },
+    {
+      "id": "gate-receipt-judged-flag",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if row.get(\"judged\") is not True:",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_an_unjudged_receipt_row_is_not_current",
+      "why": "an unjudged row would count as judged"
+    },
+    {
+      "id": "gate-receipt-scenarios",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if not isinstance(scenarios, list) or [s.get(\"name\") for s in scenarios] != [",
+      "replacement": "        if not isinstance(scenarios, list) or False and [s.get(\"name\") for s in scenarios] != [",
+      "test": "tests/test_gate.py::test_receipt_scenarios_must_match_the_change",
+      "why": "scores recorded for other scenarios would count"
+    },
+    {
+      "id": "gate-receipt-nothing-judged",
+      "file": "src/bapu/gate.py",
+      "anchor": "    if judged == 0:",
+      "replacement": "    if False:",
+      "test": "tests/test_gate.py::test_a_receipt_with_nothing_judged_is_not_current",
+      "why": "a forged PASS with nothing judged would count"
+    },
+    {
+      "id": "gate-receipt-malformed-score",
+      "file": "src/bapu/gate.py",
+      "anchor": "        if not all(jev.is_probability(v) for v in raw.values()):",
+      "replacement": "        if False:",
+      "test": "tests/test_gate.py::test_a_malformed_receipt_score_is_not_current[boolean]",
+      "why": "a malformed score would be compared as if it were one"
+    },
+    {
+      "id": "gate-self-test-planted",
+      "file": "src/bapu/gate.py",
+      "anchor": "            if report[\"verdict\"] != HOLD or not any(expect in h for h in report[\"holds\"]):",
+      "replacement": "            if False:",
+      "test": "tests/test_gate.py::test_the_self_test_catches_a_broken_gate",
+      "why": "the self-test would pass a gate that finds no structural problem"
+    },
+    {
+      "id": "gate-self-test-api-error",
+      "file": "src/bapu/gate.py",
+      "anchor": [
+        "                except jev.JevError as exc:",
+        "                    print(f\"{TOOL}: self-test: no judgment from the API: {exc}\", file=sys.stderr)"
+      ],
+      "replacement": [
+        "                except ZeroDivisionError as exc:",
+        "                    print(f\"{TOOL}: self-test: no judgment from the API: {exc}\", file=sys.stderr)"
+      ],
+      "test": "tests/test_gate.py::test_an_online_self_test_without_answers_exits_2",
+      "why": "an API outage during the self-test would end in a traceback"
+    },
+    {
+      "id": "findings-verbatim",
+      "file": "src/bapu/findings.py",
+      "anchor": "        i for i, sub in enumerate(subclaims) if sub.get(\"quote\") and sub[\"quote\"] not in evidence",
+      "replacement": "        i for i, sub in enumerate(subclaims) if False",
+      "test": "tests/test_findings.py::test_a_quote_must_match_verbatim[trailing-space]",
+      "why": "a quote that is not in the evidence would pass"
+    },
+    {
+      "id": "findings-require-quotes",
+      "file": "src/bapu/findings.py",
+      "anchor": "    if unquoted and require_quotes:",
+      "replacement": "    if False:",
+      "test": "tests/test_findings.py::test_offline_verdicts_on_the_fixture",
+      "why": "an unquoted sub-claim would pass offline"
+    },
+    {
+      "id": "findings-grey-band",
+      "file": "src/bapu/findings.py",
+      "anchor": "    if GREY_LOW <= p_supported <= GREY_HIGH:",
+      "replacement": "    if GREY_LOW < p_supported < GREY_HIGH:",
+      "test": "tests/test_findings.py::test_classify_bounds",
+      "why": "the band edges would not escalate"
+    },
+    {
+      "id": "findings-contradiction",
+      "file": "src/bapu/findings.py",
+      "anchor": "    if p_false is not None and p_false > GREY_HIGH:",
+      "replacement": "    if False:",
+      "test": "tests/test_findings.py::test_a_contradicted_subclaim_refutes_the_finding",
+      "why": "evidence showing the opposite would not refute"
+    },
+    {
+      "id": "findings-silence",
+      "file": "src/bapu/findings.py",
+      "anchor": "    if absent:",
+      "replacement": "    if False:",
+      "test": "tests/test_findings.py::test_a_subclaim_the_evidence_is_silent_on_returns_the_finding",
+      "why": "a sub-claim the evidence is silent on would be confirmed"
+    },
+    {
+      "id": "findings-quote-first",
+      "file": "src/bapu/findings.py",
+      "anchor": "        if judge is not None and row[\"verdict\"] != NEEDS_EVIDENCE:",
+      "replacement": "        if judge is not None:",
+      "test": "tests/test_findings.py::test_a_finding_that_fails_the_quote_check_never_reaches_the_api",
+      "why": "a finding with a false quote would still be sent to the API"
+    },
+    {
+      "id": "findings-whole-claim",
+      "file": "src/bapu/findings.py",
+      "anchor": "    if p_whole < GREY_LOW:",
+      "replacement": "    if False:",
+      "test": "tests/test_findings.py::test_a_claim_that_says_more_than_its_subclaims_goes_back",
+      "why": "a claim that says more than its shown sub-claims would be settled"
+    },
+    {
+      "id": "findings-attention",
+      "file": "src/bapu/findings.py",
+      "anchor": "ATTENTION = frozenset({NEEDS_EVIDENCE, UNCHECKED, ESCALATE})",
+      "replacement": "ATTENTION = frozenset({NEEDS_EVIDENCE})",
+      "test": "tests/test_findings.py::test_unchecked_findings_exit_1",
+      "why": "nothing checked would exit 0"
+    },
+    {
+      "id": "findings-self-test-planted",
+      "file": "src/bapu/findings.py",
+      "anchor": "        if got != expect:",
+      "replacement": "        if False:",
+      "test": "tests/test_findings.py::test_the_self_test_catches_a_broken_quote_check",
+      "why": "the self-test would pass a quote check that finds nothing"
+    },
+    {
+      "id": "findings-self-test-api-error",
+      "file": "src/bapu/findings.py",
+      "anchor": [
+        "        if errors:",
+        "            print(f\"{TOOL}: self-test: no judgment from the API: {errors[0]}\", file=sys.stderr)"
+      ],
+      "replacement": [
+        "        if False:",
+        "            print(f\"{TOOL}: self-test: no judgment from the API: {errors[0]}\", file=sys.stderr)"
+      ],
+      "test": "tests/test_findings.py::test_an_online_self_test_without_answers_exits_2",
+      "why": "an API outage during the self-test would read as a failed self-test"
+    },
+    {
+      "id": "seedred-line-start",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        if index == 0 or text[index - 1] == \"\\n\":",
+      "replacement": "        if True:",
+      "test": "tests/test_seedred.py::test_an_anchor_counts_only_at_the_start_of_a_line",
+      "why": "a shallower anchor would match a deeper line"
+    },
+    {
+      "id": "seedred-last-count-line",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        if _FAILED_COUNT.search(counts[-1]):",
+      "replacement": "        if _FAILED_COUNT.search(output):",
+      "test": "tests/test_seedred.py::test_the_outcome_comes_from_the_last_count_line[last-count-wins]",
+      "why": "any 'failed' in the output would score a pass as red"
+    },
+    {
+      "id": "seedred-before-passes",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    if before == PASSED:",
+      "replacement": "    if True:",
+      "test": "tests/test_seedred.py::test_a_test_that_already_fails_is_not_red_and_nothing_is_mutated",
+      "why": "a test that was already red would be mutated and scored"
+    },
+    {
+      "id": "seedred-restored-passes",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    return RED if states == (PASSED, FAILED, PASSED) else NOT_RED",
+      "replacement": "    return RED if states[1] == FAILED else NOT_RED",
+      "test": "tests/test_seedred.py::test_a_test_that_fails_after_the_restore_is_not_red",
+      "why": "a row whose restore broke the test would score red"
+    },
+    {
+      "id": "seedred-restore-verified",
+      "file": "src/bapu/seedred.py",
+      "anchor": "            if path.read_bytes() != original:",
+      "replacement": "            if False:",
+      "test": "tests/test_seedred.py::test_a_failed_restore_is_loud_and_keeps_a_backup",
+      "why": "a failed restore would pass silently"
+    },
+    {
+      "id": "seedred-mtime-bump",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    mtime = max(time.time_ns(), stat.st_mtime_ns + 1_000_000_000)",
+      "replacement": "    mtime = stat.st_mtime_ns",
+      "test": "tests/test_seedred.py::test_the_mutated_file_never_shares_the_original_mtime",
+      "why": "cached bytecode of the original could stand in for the mutation"
+    },
+    {
+      "id": "seedred-timestamps",
+      "file": "src/bapu/seedred.py",
+      "anchor": "            os.utime(path, ns=(stat.st_atime_ns, stat.st_mtime_ns))",
+      "replacement": "            os.utime(path)",
+      "test": "tests/test_seedred.py::test_the_file_is_restored_byte_for_byte_with_its_timestamps",
+      "why": "the restored file would keep a new timestamp"
+    },
+    {
+      "id": "seedred-hold-signals",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        if self.holding:",
+      "replacement": "        if False:",
+      "test": "tests/test_seedred.py::test_a_signal_during_the_restore_waits_until_the_file_is_back",
+      "why": "a signal in the middle of a restore would leave the file half put back"
+    },
+    {
+      "id": "seedred-sigint",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    for name in (\"SIGINT\", \"SIGTERM\", \"SIGHUP\"):",
+      "replacement": "    for name in (\"SIGTERM\", \"SIGHUP\"):",
+      "test": "tests/test_seedred.py::test_a_signal_outside_a_restore_interrupts_at_once",
+      "why": "Ctrl-C during a restore would not be held"
+    },
+    {
+      "id": "seedred-stop-on-no-result",
+      "file": "src/bapu/seedred.py",
+      "anchor": "                stopped = result[\"verdict\"] == NO_VERDICT and not keep_going",
+      "replacement": "                stopped = False",
+      "test": "tests/test_seedred.py::test_no_result_stops_the_table_unless_keep_going",
+      "why": "rows after a broken run would keep running"
+    },
+    {
+      "id": "seedred-duplicate-rows",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    repeated_rows = sorted({r.id for r, s in zip(rows, seeds) if seeds.count(s) > 1})",
+      "replacement": "    repeated_rows = []",
+      "test": "tests/test_seedred.py::test_duplicate_ids_rows_and_an_empty_table_are_problems",
+      "why": "one experiment written twice would count twice"
+    },
+    {
+      "id": "seedred-nothing-mutated",
+      "file": "src/bapu/seedred.py",
+      "anchor": [
+        "    if problems:",
+        "        for problem in problems:",
+        "            print(f\"{TOOL}: {problem}\", file=sys.stderr)"
+      ],
+      "replacement": [
+        "    if False:",
+        "        for problem in problems:",
+        "            print(f\"{TOOL}: {problem}\", file=sys.stderr)"
+      ],
+      "test": "tests/test_seedred.py::test_an_anchor_that_does_not_match_exactly_once_mutates_nothing",
+      "why": "a table with a broken anchor would start mutating"
+    },
+    {
+      "id": "seedred-dirty-git",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        if dirty:",
+      "replacement": "        if False:",
+      "test": "tests/test_seedred.py::test_uncommitted_targets_under_git_are_refused_unless_allowed",
+      "why": "uncommitted work in a target file would be overwritten and restored from memory only"
+    },
+    {
+      "id": "seedred-timeout",
+      "file": "src/bapu/seedred.py",
+      "anchor": "            return TIMEOUT, f\"{partial}\\n(timed out after {timeout:g}s)\"",
+      "replacement": "            return PASSED, partial",
+      "test": "tests/test_seedred.py::test_a_hanging_test_times_out_as_no_result",
+      "why": "a hang would read as a pass"
+    },
+    {
+      "id": "seedred-typo",
+      "file": "src/bapu/seedred.py",
+      "anchor": "                if undefined:",
+      "replacement": "                if False:",
+      "test": "tests/test_seedred.py::test_a_typo_in_the_replacement_is_refused_before_anything_runs",
+      "why": "a typo in a replacement would be scored as a caught defect"
+    },
+    {
+      "id": "seedred-broken-module",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    if verdict == RED and failure in BROKEN_MODULE:",
+      "replacement": "    if False:",
+      "test": "tests/test_seedred.py::test_a_mutation_that_breaks_the_module_is_not_red",
+      "why": "a replacement that breaks the module would score red"
+    },
+    {
+      "id": "seedred-wide-summary",
+      "file": "src/bapu/seedred.py",
+      "anchor": "    return {**os.environ, \"PYTHONDONTWRITEBYTECODE\": \"1\", \"COLUMNS\": \"4096\"}",
+      "replacement": "    return {**os.environ, \"PYTHONDONTWRITEBYTECODE\": \"1\"}",
+      "test": "tests/test_seedred.py::test_a_long_node_id_still_names_its_failure_end_to_end",
+      "why": "a long test name would hide the exception, and a broken module would score red"
+    },
+    {
+      "id": "seedred-run-time-recheck",
+      "file": "src/bapu/seedred.py",
+      "anchor": [
+        "    if hits != 1:",
+        "        raise TableError(",
+        "            f\"row {row.id}: anchor matches {hits} times in {row.file} (expected exactly 1); \""
+      ],
+      "replacement": [
+        "    if False:",
+        "        raise TableError(",
+        "            f\"row {row.id}: anchor matches {hits} times in {row.file} (expected exactly 1); \""
+      ],
+      "test": "tests/test_seedred.py::test_a_file_changed_after_the_check_is_refused_at_run_time",
+      "why": "a file edited after the check would be mutated at the wrong place"
+    },
+    {
+      "id": "seedred-git-ignored",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        [git, \"-C\", str(root), \"status\", \"--porcelain\", \"--ignored\", \"--untracked-files=all\"]",
+      "replacement": "        [git, \"-C\", str(root), \"status\", \"--porcelain\", \"--untracked-files=all\"]",
+      "test": "tests/test_seedred.py::test_an_ignored_target_is_refused_because_git_cannot_restore_it",
+      "why": "an ignored target, which git cannot restore, would be mutated"
+    },
+    {
+      "id": "seedred-git-fail-closed",
+      "file": "src/bapu/seedred.py",
+      "anchor": "        if \"not a git repository\" in inside.stderr.lower():",
+      "replacement": "        if True:",
+      "test": "tests/test_seedred.py::test_a_git_failure_other_than_no_repository_is_an_error",
+      "why": "any git failure would silently skip the safety check"
+    },
+    {
+      "id": "jev-no-redirect",
+      "file": "src/bapu/jev.py",
+      "anchor": "        return None",
+      "replacement": "        return super().redirect_request(req, fp, code, msg, headers, newurl)",
+      "test": "tests/test_jev.py::test_a_redirect_is_an_error_and_the_key_is_not_resent",
+      "why": "a redirect would resend the key to another host"
+    },
+    {
+      "id": "jev-retry-bound",
+      "file": "src/bapu/jev.py",
+      "anchor": "            if exc.code in RETRY_STATUSES and attempt < retries:",
+      "replacement": "            if exc.code in RETRY_STATUSES and attempt <= retries:",
+      "test": "tests/test_jev.py::test_retries_are_bounded_and_other_errors_are_not_retried",
+      "why": "one retry more than asked for"
+    },
+    {
+      "id": "jev-model-pin",
+      "file": "src/bapu/jev.py",
+      "anchor": "    if answered != model:",
+      "replacement": "    if False:",
+      "test": "tests/test_jev.py::test_malformed_responses_are_errors_never_scores[other-model]",
+      "why": "an answer from another model version would be used"
+    },
+    {
+      "id": "jev-probability",
+      "file": "src/bapu/jev.py",
+      "anchor": "    return type(value) in (int, float) and 0 <= value <= 1",
+      "replacement": "    return value is not None",
+      "test": "tests/test_jev.py::test_a_noul_outside_zero_to_one_is_refused[True]",
+      "why": "a boolean or out-of-range answer would count as a score"
+    },
+    {
+      "id": "jev-edge-trigger",
+      "file": "src/bapu/jev.py",
+      "anchor": "_EDGE_TRIGGER = re.compile(r\"[`'|;](?=\\s*python\\s+-[A-Za-z])\")",
+      "replacement": "_EDGE_TRIGGER = re.compile(r\"(?!x)x\")",
+      "test": "tests/test_jev.py::test_edge_safe_replaces_only_the_triggering_characters",
+      "why": "evidence quoting a python command would be refused at the edge"
+    },
+    {
+      "id": "jev-key-shape",
+      "file": "src/bapu/jev.py",
+      "anchor": "    if not key or any(ch.isspace() or not ch.isprintable() for ch in key):",
+      "replacement": "    if not key:",
+      "test": "tests/test_jev.py::test_a_malformed_key_is_refused_without_being_echoed[newline]",
+      "why": "a key with a line break would reach the HTTP layer, which quotes it in its error"
+    },
+    {
+      "id": "jev-value-error",
+      "file": "src/bapu/jev.py",
+      "anchor": "        except ValueError as exc:",
+      "replacement": "        except ZeroDivisionError as exc:",
+      "test": "tests/test_jev.py::test_an_unsendable_request_does_not_echo_the_error",
+      "why": "an error quoting the request header would reach the terminal"
+    }
+  ]
+}

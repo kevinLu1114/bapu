@@ -1,0 +1,40 @@
+name: Feature request
+description: Propose a new behaviour, stated as a clause a test can check.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What goes wrong or cannot be checked today? A concrete case helps most.
+    validations:
+      required: true
+  - type: textarea
+    id: requirement
+    attributes:
+      label: Proposed requirement
+      description: One behaviour, with one SHALL or MUST, observable from outside the code.
+      placeholder: The seed-red runner SHALL exit 2 when ...
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Scenario
+      description: A case a test could set up and observe.
+      value: |
+        - **GIVEN** ...
+        - **WHEN** ...
+        - **THEN** ...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Disclosure
+      options:
+        - label: I disclosed any AI assistance used to write this request.

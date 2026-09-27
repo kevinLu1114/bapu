@@ -1,0 +1,68 @@
+name: Bug report
+description: A tool does something other than what its documentation says.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting. The fastest reports to act on carry their own evidence:
+        an exact command, its input, and its output pasted verbatim.
+        Security problems go through private reporting instead (see SECURITY.md).
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Tool
+      options:
+        - bapu-gate
+        - bapu-seedred
+        - bapu-findings
+        - the online client
+        - documentation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `bapu-gate --version` (or the commit you ran).
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The exact commands and the smallest input files that show the problem. Offline if at all possible.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: One behaviour, and where it is documented.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual output
+      description: Pasted verbatim, not paraphrased.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and Python version.
+    validations:
+      required: true
+  - type: checkboxes
+    id: evidence
+    attributes:
+      label: Evidence checklist
+      options:
+        - label: The output above is pasted verbatim.
+          required: true
+        - label: The reproduction runs offline (or I explained why it cannot).
+        - label: I disclosed any AI assistance used to write this report.

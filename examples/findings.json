@@ -1,0 +1,41 @@
+{
+  "findings": [
+    {
+      "id": "F1",
+      "claimed_severity": "P1",
+      "claim": "A second export without --force replaces the first file instead of refusing.",
+      "evidence": "$ export --out out\nwrote out/export.json\n$ export --out out\nwrote out/export.json\nexit status 0",
+      "subclaims": [
+        {
+          "text": "The second export writes out/export.json again.",
+          "quote": "$ export --out out\nwrote out/export.json\nexit status 0"
+        },
+        {
+          "text": "The second export exits 0 instead of 3.",
+          "quote": "exit status 0"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "claimed_severity": "P0",
+      "claim": "The --force export loses the records added since the first export.",
+      "evidence": "$ export --out out --force\nwrote out/export.json (4 records)",
+      "subclaims": [
+        {
+          "text": "The --force export writes only three records.",
+          "quote": "wrote out/export.json (3 records)"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "claimed_severity": "P2",
+      "claim": "The refusal message is printed to stdout instead of stderr.",
+      "evidence": "$ export --out out 2>/dev/null\noutput exists",
+      "subclaims": [
+        "The refusal message is still visible when stderr is discarded."
+      ]
+    }
+  ]
+}

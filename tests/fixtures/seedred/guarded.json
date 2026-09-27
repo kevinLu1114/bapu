@@ -1,0 +1,26 @@
+{
+  "rows": [
+    {
+      "id": "cap",
+      "file": "pricing.py",
+      "anchor": "    if percent > 50:",
+      "replacement": "    if False:",
+      "test": "tests/test_pricing.py::test_discount_is_capped_at_fifty_percent",
+      "why": "known negative: this test sees the cap, so the mutation must go red"
+    },
+    {
+      "id": "negative",
+      "file": "pricing.py",
+      "anchor": "    if percent < 0:",
+      "replacement": "    if False:",
+      "test": "tests/test_pricing.py::test_negative_discount_is_refused"
+    },
+    {
+      "id": "formula",
+      "file": "pricing.py",
+      "anchor": "    return round(price * (100 - percent) / 100, 2)",
+      "replacement": "    return round(price * (100 + percent) / 100, 2)",
+      "test": "tests/test_pricing.py::test_discount_is_applied"
+    }
+  ]
+}

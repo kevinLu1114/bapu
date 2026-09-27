@@ -1,0 +1,12 @@
+{
+  "rows": [
+    {
+      "id": "cap-with-the-wrong-test",
+      "file": "retry.py",
+      "anchor": "        if delay > cap:",
+      "replacement": "        if False:",
+      "test": "tests/test_retry.py::test_delays_double_each_attempt",
+      "why": "three attempts from 1.0 never reach the cap of 30, so this test cannot see the cap"
+    }
+  ]
+}

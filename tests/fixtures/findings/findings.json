@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "known-good",
+      "claimed_severity": "P1",
+      "claim": "A resumed build reports success although the check run right after it fails.",
+      "evidence": "$ build --resume\n{'written': 1} ok=True\n$ check\nchecksum mismatch: out.json",
+      "subclaims": [
+        {"text": "The resumed build prints ok=True.", "quote": "ok=True"},
+        {"text": "The check reports a checksum mismatch.", "quote": "checksum mismatch: out.json"}
+      ]
+    },
+    {
+      "id": "paraphrased-quote",
+      "claimed_severity": "P1",
+      "claim": "A resumed build reports success although the check run right after it fails.",
+      "evidence": "$ build --resume\n{'written': 1} ok=True\n$ check\nchecksum mismatch: out.json",
+      "subclaims": [
+        {"text": "The resumed build prints ok=True.", "quote": "ok=True"},
+        {"text": "The check reports a checksum mismatch.", "quote": "checksum mismatch in out.json"}
+      ]
+    },
+    {
+      "id": "unquoted",
+      "claimed_severity": "P2",
+      "claim": "The check exits 0 after reporting a mismatch.",
+      "evidence": "$ check; echo rc=$?\nchecksum mismatch: out.json\nrc=0",
+      "subclaims": [
+        {"text": "The check reports a mismatch.", "quote": "checksum mismatch: out.json"},
+        "The check exits 0."
+      ]
+    },
+    {
+      "id": "no-subclaims",
+      "claim": "The build is slow.",
+      "evidence": "$ time build\nreal 0m41.2s"
+    }
+  ]
+}
