@@ -3,7 +3,10 @@
 AI agents write specifications, code and review comments faster than anyone can check them.
 The expensive step is no longer producing a change; it is deciding whether its claims hold.
 This workflow puts a mechanical check at each hand-off, so every claim arrives with evidence
-that someone else can re-run instead of having to trust.
+that someone else can re-run instead of having to trust. The contribution contract that
+surrounds it — who owns a change, how big it may be, how it is titled, and how it is handed
+over — lives in [CONTRIBUTING.md](../CONTRIBUTING.md); the steps below are the verification entry
+points those rules point at.
 
 ```
  +-------------------+
@@ -51,10 +54,11 @@ that someone else can re-run instead of having to trust.
 
 ## 1. Spec
 
-是否採用 OpenSpec 依 [CONTRIBUTING.md](../CONTRIBUTING.md) 的貢獻規則；
-本文件第 1、2 步只適用於選用 OpenSpec 的變更。若選用，先寫 delta 再寫程式碼。
-每個 `### Requirement:` 描述一個 SHALL 或 MUST 行為；每個 `#### Scenario:`
-描述測試可以建立的 WHEN 與觀察到的 THEN。未採用 OpenSpec 不代表免除行為與驗收說明。
+Whether to use OpenSpec follows the contribution rules in [CONTRIBUTING.md](../CONTRIBUTING.md);
+steps 1 and 2 here apply only to changes that opt into it. If you do, write the delta before the
+code. Each `### Requirement:` states one SHALL or MUST behaviour, and each `#### Scenario:` a
+WHEN a test can set up and a THEN it can observe. Not using OpenSpec does not excuse you from
+stating the behaviour and its acceptance criteria.
 
 The unit of review is the clause. A requirement that bundles three behaviours cannot be checked
 as a whole: a test passes for one of them and the other two ride along unverified.
@@ -68,9 +72,11 @@ scenario has a WHEN and a THEN, and a new capability states its purpose. With `-
 outside, and free of implementation detail, and each scenario for being a concrete, testable
 case. See [gate.md](gate.md).
 
-**本步完成條件**：離線執行回報 STRUCTURE-OK，並保留原始輸出及受檢查內容的
-revision 或 digest；離線模式不產生模型評分收據。若使用已授權的線上評分，
-則須回報 PASS，並保留對應本次受檢查內容的評分收據。兩者都不代表實作已通過驗收。
+**Done when** the offline run reports STRUCTURE-OK, and you keep its raw output together with
+the revision or digest of the content that was checked; offline mode produces no model-score
+receipt. If you use authorised online scoring, it must report PASS, and you keep the receipt
+that matches the content you checked. Neither verdict means the implementation has passed
+acceptance.
 
 ## 3. Implement
 
@@ -108,10 +114,13 @@ is right: reproduce it before fixing, then add a seed-red row that proves the fi
 
 ## 7. Land
 
-交件保留適用的 gate 報告、seed-red 結果及 finding verdict，讓 reviewer 能重跑。
-純文件修改、沒有測試變更或 review 沒有 finding 時，依各步的適用範圍標記
-「不適用」並說明原因；不能製造空輸入來換取 PASS，也不能省略仍受變更影響的驗證。
-若此次任務要求執行某一步，必須附該步的實際結果，不能自行改成不適用。
+A deliverable keeps the applicable gate report, seed-red results and finding verdicts, so a
+reviewer can re-run them. For a documentation-only change, a change with no test change, or a
+review that raised no finding, mark the inapplicable steps "not applicable" and give the reason;
+never manufacture an empty input to buy a PASS, and never skip verification the change still
+affects. If the task itself requires a step to be run, attach that step's actual result — you
+cannot declare it not applicable. Hand the pull request over as `ready_for_review` or `blocked`,
+as [CONTRIBUTING.md](../CONTRIBUTING.md) describes.
 
 ## Principles
 

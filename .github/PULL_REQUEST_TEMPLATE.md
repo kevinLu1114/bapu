@@ -1,20 +1,40 @@
+<!--
+  One change per pull request. Small and docs-only changes stay light: fill the sections that
+  apply and mark the rest N/A with a short reason. Keep the headings so reviewers can find each
+  answer.
+
+  The pull request title becomes the squash commit subject once merged, so it follows
+  Conventional Commits — `type(scope)!: imperative description`, with an optional scope and `!`
+  for a breaking change. The `Validate PR title` check enforces the type, the optional scope and
+  the `!`; nothing about the correctness of the change. The full contract is in CONTRIBUTING.md.
+
+  Never put secrets, tokens, personal data, private paths, or unrelated environment details in
+  this description or in the linked evidence.
+-->
+
 ## What and why
 
-<!-- One change per pull request. Link the issue it resolves: "Fixes #123". -->
+<!-- Link the issue this resolves: "Fixes #123". Explain why the change
+is needed, not only what it does. -->
 
-## 任務與權限
+## Task and authorization
 
-<!-- 填寫任務／issue、基準 revision、工作 branch、交件對象、負責的範圍與不做的事、
-可重現驗收。若涉及外部寫入、付費服務、發佈或部署，列出對應授權；
-此 PR 本身不授予這些權限。 -->
+<!-- The task or issue, the base revision, the working branch, the intended recipient, the scope
+you own, and the non-goals — what this pull request deliberately does not do. If the change needs
+an external write, a paid service, a release, or a deployment, list the separate authorization it
+requires; this pull request does not grant it. -->
 
-## 可重現交件
+## Reproducible evidence
 
-<!-- 受驗證的程式 revision；實際指令、工作目錄、相關工具版本、退出碼；
-原始 log／工件的位置及 revision 或 digest。未執行的檢查明確標示，不得填 PASS。
-受驗證內容變更後，重跑受影響的檢查。規則見根目錄 CONTRIBUTING.md。 -->
+<!-- The verified revision; the exact commands, working directory, relevant tool versions, and
+exit codes; where the raw log or artifact lives, with its revision or digest. A check you did not
+run is stated explicitly, never as PASS. Re-run the affected checks after the verified content
+changes. Rules: CONTRIBUTING.md. -->
 
 ## Evidence checklist
+
+<!-- Mark an item N/A with a reason when it does not apply — a docs-only change has no test rows,
+for example. -->
 
 - [ ] Behaviour changes are stated as clauses: one behaviour per requirement, each with a
       scenario (WHEN / THEN); an OpenSpec delta, if any, passes `bapu-gate`.
@@ -23,19 +43,25 @@
 - [ ] Review findings I am responding to, or raising, quote their evidence verbatim.
 - [ ] `python -m pytest -q` passes, and `ruff check .` and `ruff format --check .` are clean.
 - [ ] `CHANGELOG.md` is updated under `[Unreleased]` for user-visible changes.
-- [ ] AI assistance, if any, is disclosed below.
+- [ ] No secret, token, personal datum, private path, or unrelated environment detail appears in
+      this description or in the linked evidence.
 
 ## Coverage
 
 <!-- The failure classes the tests cover (absent, empty, malformed, boundary, stale, partial
-failure, ...) and the classes deliberately not covered, with the reason. -->
+failure, ...) and the classes deliberately left out, each with the reason for the gap. -->
 
-## AI assistance
+## Author, AI assistance, and review
 
-<!-- None, or what was used and for which part. -->
+- **Author** (accountable for this change): <!-- A human or agent name or handle. This is who
+  answers for the evidence above, and the author stays accountable whether or not AI wrote it. -->
+- **AI assistance**: <!-- None, or which tool was used and for which part. Disclosed agents are
+  welcome; an undisclosed or unattributable change is not. -->
+- **Independent review**: <!-- Who reviewed this change (human or model), what they reviewed, and
+  what remains unreviewed. "Not yet reviewed" is a fine answer; leaving it unstated is not. -->
 
-## 尚未完成與交接
+## Handoff
 
-<!-- 選擇 ready_for_review 或 blocked；這是交件者的狀態，不是系統驗收結果。
-列出未驗證範圍、已知限制、獨立 review 狀態；若阻塞，列出已嘗試的操作、缺少什麼，
-以及接手者可直接執行的下一步。不要把秘密或無關的環境資訊放進證據。 -->
+<!-- Choose one: ready_for_review or blocked. This is the submitter's state, not a verification
+result. List the unverified scope, the known limitations, and the review status above. If blocked,
+list what you tried, what is missing, and the next concrete step a taker can run. -->

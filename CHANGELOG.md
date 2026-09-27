@@ -22,12 +22,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `--self-test` for each tool, with planted known positives and known negatives.
 - Documentation of the workflow, each tool, the online mode, and a public case study.
 - A seed-red table that proves this repository's own tests.
-- 在 CONTRIBUTING 與 PR template 定義 agent 與人共用的任務、權限、證據與交接契約；
-  README 明確區分 Mac 整合的產品方向、現有 CLI 與尚未實作的能力。
+- A shared contribution contract for humans and agents, covering task scope, authorization,
+  evidence, and handoff. The README distinguishes delivered CLIs from the future Mac integration.
+- English-first contribution guidance with synchronized Traditional Chinese README and
+  contribution guides, Conventional Commit conventions, and semantic pull request title checks.
 
 ### Fixed
 
-- 長測試名稱的種紅案例隔離繼承的 CI 環境，避免 pytest 關閉摘要截斷後漏測欄寬行為。
-- 文件釐清 OpenSpec 的適用範圍，以及離線 STRUCTURE-OK 不需要線上評分收據。
+- Seed-red coverage for long test names isolates inherited CI settings so pytest's untruncated
+  summaries do not bypass the output-width regression.
+- Documentation clarifies when OpenSpec applies and why offline STRUCTURE-OK needs no online receipt.
 
 [Unreleased]: https://github.com/kevinLu1114/bapu/commits/main
