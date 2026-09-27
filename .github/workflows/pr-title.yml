@@ -1,0 +1,67 @@
+# Validates the pull request title against Conventional Commits, because the title becomes the
+# squash commit subject on `main` (with the repository set to squash and default to the pull
+# request title). One behaviour per check: this gate says nothing about the correctness of the
+# change, only about the metadata of the pull request.
+#
+# `pull_request_target` runs this file from the base branch, so the check works for pull requests
+# from forks. It also means the file only takes effect once it is on the default branch, and that
+# a change to it applies to the pull requests opened after the change lands. The job never checks
+# out or runs pull request code: it reads the title through the API with the automatic token,
+# which is granted read access to pull requests and nothing else.
+#
+# Making this a gate rather than a signal also needs `Validate PR title` registered as a required
+# status check on the default branch; that is a repository setting, not part of this file.
+#
+# Specification - https://www.conventionalcommits.org/en/v1.0.0/
+# Action - https://github.com/amannn/action-semantic-pull-request
+
+name: PR title
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      # `synchronize` re-runs the check on every new push, which a required check needs.
+      - synchronize
+      # A draft that becomes ready has not been checked yet under its final title.
+      - ready_for_review
+
+# Deny by default; the job below is the only place a permission is granted.
+permissions: {}
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    steps:
+      # Pinned to the v6.1.1 commit: a tag can be moved, a commit cannot.
+      # https://github.com/amannn/action-semantic-pull-request/releases/tag/v6.1.1
+      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Exactly the types in CONTRIBUTING.md, one per line. The action wraps each entry in
+          # `^...$`, so these are literal type names, not regular expressions. A scope stays
+          # optional, and `!` after the type or scope marks a breaking change (for example
+          # `feat(api)!: Drop the legacy flag`).
+          types: |
+            feat
+            fix
+            docs
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            style
+            revert

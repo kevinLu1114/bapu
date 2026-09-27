@@ -9,10 +9,19 @@ on:
 permissions:
   contents: read
 
+# Superseded pull request runs are cancelled, so that a push per commit does not queue a full
+# matrix behind an outdated revision. A push to `main` or a manual run gets a unique group and is
+# never cancelled or held behind another run. The timeouts below replace GitHub's 6 hour default
+# with headroom over the observed runtime, so a hung job releases its runner.
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test:
     name: pytest (${{ matrix.os }}, Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -39,6 +48,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -51,6 +61,7 @@ jobs:
   seed-red:
     name: seed-red (the repository proves its own tests)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

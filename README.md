@@ -1,18 +1,27 @@
 # Bapu
 
-**以既有上游為基礎，整合 Mac 上從 agent 到推論的開發環境。**
+**Integrating the Mac development path from agent to inference, on top of existing upstreams.**
 
 *If it can't fail, it didn't pass.*
+
+[English](README.md) | [繁體中文](README.zh-TW.md)
 
 [![tests](https://github.com/kevinLu1114/bapu/actions/workflows/tests.yml/badge.svg)](https://github.com/kevinLu1114/bapu/actions/workflows/tests.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![python: 3.9 to 3.13](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](pyproject.toml)
 
-Bapu 的長期方向是減少 Mac 開發環境中 agent、工具與推論服務的手動整合工作，而不是重做上游產品。
-預設以 OMP 承接日常流程，整合契約保持 harness-neutral；版本管理須記錄精確上游版本、本地修補與實際驗證過的組合。
-這些是產品方向，不是目前已交付的完整平台：跨 harness adapters、推論服務部署與自動升級尚未實作。
+Bapu's long-term direction is to cut the manual integration work between agents, tools and
+inference services in a Mac development environment, rather than to reinvent the upstream
+products. OMP is the default for the day-to-day flow, and the integration contracts stay
+harness-neutral, so one component can be replaced without rewriting the workflow around it.
 
-目前的 `0.1.0` 提供下列三個可獨立使用的驗證 CLI：
+These are product directions, not a complete platform delivered today: cross-harness adapters,
+inference service deployment, scheduling and automatic upgrades are not implemented, and
+nothing routes or upgrades itself. Reusing an upstream — or moving to a newer version of one —
+is a deliberate, verified step: pin the exact upstream version, record the local patches, and
+re-run the verification on that pinned combination before you rely on it.
+
+The current `0.1.0` release provides three standalone verification CLIs:
 
 | Tool | What it checks |
 |---|---|
@@ -46,6 +55,8 @@ through a public example.
 
 ## Install
 
+Bapu is installed from source: it has not been published to PyPI, and the commands below are
+the supported way to get `0.1.0`.
 
 ```
 git clone https://github.com/kevinLu1114/bapu
